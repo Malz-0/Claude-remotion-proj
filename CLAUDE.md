@@ -1,3 +1,38 @@
+# Toolchain (Claude Code coordinates)
+
+| Need | Tool | How |
+|---|---|---|
+| Video | Remotion | see "Video production defaults" below |
+| Knowledge / docs | Obsidian vault in `vault/` | edit Markdown directly; `node scripts/vault-check.mjs` |
+| Second coding agent / reviews | OpenAI Codex CLI | `scripts/codex-agent.sh status \| review \| ask \| task` |
+| Source control | GitHub | feature branch, commit + push; PRs only when asked |
+| Web/docs research | Firecrawl connector | prefer it for external data when its tools fit |
+
+Setup: `bash scripts/bootstrap-dev-env.sh` installs Codex + Obsidian Headless + deps (idempotent).
+
+## Obsidian vault rules
+- The vault is `vault/` (open it in Obsidian with *Open folder as vault*). Start at `vault/Home.md`.
+- The `obsidian` CLI needs the desktop app running, so in cloud sessions edit files directly.
+  If `command -v obsidian` succeeds and the app is running, prefer it (`obsidian search …`, `create`).
+- Every note: YAML properties with `type`, `tags`, `updated` (+ `status` for projects/tasks);
+  `[[wikilinks]]` up to its project or `Home`; new notes from `vault/Templates/`.
+- Per project: `10 Projects/<name>/<name>.md`, `Decision Log.md`, `Progress Log.md`.
+- After meaningful work: append to the Progress Log, record decisions (D-xxx) in the Decision Log,
+  update `updated:`; run `node scripts/vault-check.mjs` (must report 0 errors) before committing.
+- Never send vault contents to external services (Codex, web tools) without the user's OK.
+
+## Working with Codex
+- `codex mcp-server` was removed upstream; use the CLI wrapper, not MCP.
+- Check `scripts/codex-agent.sh status` first. If auth is missing, say so and continue without Codex —
+  never ask for keys in chat (user adds `CODEX_API_KEY` as an environment secret).
+- Use Codex for: independent review of non-trivial diffs (`review --uncommitted` / `--base main`),
+  second opinions on architecture/debugging (`ask`), and well-scoped parallel tasks (`task <slug>`),
+  which run in their own git worktree + `codex/<slug>` branch.
+- One writer per file set. Never edit files Codex is working on; never let Codex edit the main checkout.
+- Treat Codex output as a peer's claims: reproduce or refute each with tests/renders/docs; record
+  unresolved disagreements in the Decision Log and ask the user.
+- Review the diff and run `tsc`/`eslint` (and renders for video) before accepting any Codex change.
+
 # Video production defaults
 
 **Remotion (https://www.remotion.dev/) is the default framework for every request to
