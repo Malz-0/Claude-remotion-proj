@@ -9,6 +9,7 @@ Entry point for the vault. Every note should be reachable from here in ≤ 2 cli
 
 ## Projects
 - [[Claude-remotion-proj]] — programmatic video with Remotion · status: active
+- [[Cyber Digital Products]] — AI-assisted cyber security digital products (UK) · status: validating
 
 ## Docs & runbooks
 - [[Agent Workflow]] — how Claude Code, Codex, Obsidian and GitHub work together
