@@ -10,6 +10,13 @@
 
 Setup: `bash scripts/bootstrap-dev-env.sh` installs Codex + Obsidian Headless + deps (idempotent).
 
+## Plugins (ECC)
+The user may have the ECC plugin (`ecc@ecc`, github.com/affaan-m/ECC) installed on their own machine.
+Use its skills/agents/commands when they fit the task, but **this file takes precedence**: where ECC
+rules, hooks or commands conflict with anything here (Remotion workflow, vault rules, Codex process,
+branch/PR policy, no PRs unless asked), follow this file. If an ECC hook blocks or rewrites an action,
+say so instead of working around it silently.
+
 ## Obsidian vault rules
 - The vault is `vault/` (open it in Obsidian with *Open folder as vault*). Start at `vault/Home.md`.
 - The `obsidian` CLI needs the desktop app running, so in cloud sessions edit files directly.
