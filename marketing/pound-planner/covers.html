@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Pound Planner listing images</title>
+<style>
+  @font-face { font-family: "Space Grotesk"; src: url("../../public/fonts/SpaceGrotesk-Variable.woff2") format("woff2"); font-weight: 300 700; }
+  @font-face { font-family: "Inter"; src: url("../../public/fonts/Inter-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  :root {
+    --ink: #10231C; --ink-2: #2B3D35; --muted: #5E6B64; --line: #E3DDD0;
+    --paper: #F6F2E8; --card: #FFFFFF;
+    --accent: #1F8F5F; --accent-dark: #146B46; --accent-soft: #D7EEDF;
+    --amber: #C98A12; --amber-soft: #FBEFD5; --red: #C2453A; --red-soft: #F8DEDA; --grey-soft: #ECEAE4;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #888; font-family: Inter, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .canvas { width: 1200px; height: 900px; background: var(--paper); position: relative; overflow: hidden; margin: 0 0 20px; }
+  .canvas::before { /* soft pound-green glow for depth */
+    content: ""; position: absolute; width: 900px; height: 900px; right: -260px; top: -320px;
+    background: radial-gradient(circle, rgba(31,143,95,.16), transparent 65%);
+  }
+  .pad { position: absolute; inset: 72px 80px; }
+  .eyebrow { font: 600 15px/1 Inter; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
+  h1, h2 { font-family: "Space Grotesk"; font-weight: 700; letter-spacing: -.03em; line-height: 1.02; }
+  h1 { font-size: 92px; }
+  h2 { font-size: 64px; }
+  .lede { font-size: 25px; line-height: 1.4; color: var(--ink-2); }
+  .small { font-size: 16px; color: var(--muted); }
+  .brand { display: flex; align-items: center; gap: 12px; font: 700 22px/1 "Space Grotesk"; letter-spacing: -.01em; }
+  .mark { width: 40px; height: 40px; border-radius: 11px; background: var(--accent); color: #fff; display: grid; place-items: center; font: 700 24px/1 "Space Grotesk"; }
+  .card { background: var(--card); border-radius: 22px; box-shadow: 0 1px 0 rgba(16,35,28,.04), 0 24px 60px -18px rgba(16,35,28,.28); border: 1px solid var(--line); }
+  .pill { display: inline-flex; align-items: center; gap: 9px; padding: 11px 18px; border-radius: 999px; background: var(--card); border: 1px solid var(--line); font: 600 17px/1 Inter; color: var(--ink); }
+  .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+  .num { font-family: "Space Grotesk"; font-variant-numeric: tabular-nums; }
+  .example { position: absolute; font: 600 12px/1 Inter; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  .split { position: absolute; left: 80px; right: 80px; top: 70px; bottom: 120px; display: flex; align-items: center; justify-content: space-between; gap: 56px; }
+  .split > * { position: static !important; }
+  .footer { position: absolute; left: 80px; right: 80px; bottom: 44px; display: flex; justify-content: space-between; align-items: center; }
+
+  /* 1 — hero */
+  #c1 .left { width: 560px; }
+  #c1 h1 { margin: 22px 0 26px; }
+  #c1 .pills { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 38px; }
+  #c1 .dash { width: 490px; padding: 32px 34px 30px; flex: none; }
+  .dash-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 22px; }
+  .dash-h b { font: 700 21px/1 "Space Grotesk"; } .dash-h span { font-size: 15px; color: var(--muted); }
+  .safe { background: var(--accent); color: #fff; border-radius: 16px; padding: 22px 24px; margin-bottom: 22px; }
+  .safe .lbl { font: 600 15px/1 Inter; letter-spacing: .06em; text-transform: uppercase; opacity: .85; }
+  .safe .val { font: 700 64px/1 "Space Grotesk"; letter-spacing: -.02em; margin-top: 10px; }
+  .safe .sub { font-size: 15px; opacity: .85; margin-top: 6px; }
+  .row { display: flex; justify-content: space-between; padding: 12px 2px; border-bottom: 1px solid var(--line); font-size: 18px; }
+  .row:last-of-type { border-bottom: 0; }
+  .row .num { font-weight: 600; font-size: 19px; }
+  .bar { height: 10px; border-radius: 6px; background: var(--grey-soft); margin-top: 16px; overflow: hidden; }
+  .bar i { display: block; height: 100%; border-radius: 6px; background: var(--accent); }
+  #c1 .credential { position: absolute; left: 80px; bottom: 52px; display: flex; align-items: center; gap: 14px; font-size: 18px; color: var(--ink-2); }
+  #c1 .credential svg { flex: none; }
+
+  /* 2 — what's inside */
+  #c2 .grid { position: absolute; left: 80px; right: 80px; top: 250px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  #c2 .tile { padding: 28px 28px 26px; min-height: 236px; }
+  .ico { width: 54px; height: 54px; border-radius: 14px; background: var(--accent-soft); display: grid; place-items: center; margin-bottom: 20px; }
+  .tile h3 { font: 700 26px/1.1 "Space Grotesk"; letter-spacing: -.02em; margin-bottom: 10px; }
+  .tile p { font-size: 18px; line-height: 1.45; color: var(--ink-2); }
+
+  /* 3 — 50/30/20 */
+  #c3 .left { width: 470px; }
+  #c3 h2 { margin: 22px 0 22px; }
+  #c3 .panel { width: 540px; padding: 34px 34px 22px; flex: none; }
+  .rule { padding: 20px 0; border-bottom: 1px solid var(--line); }
+  .rule:last-child { border-bottom: 0; }
+  .rule-h { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .rule-h b { font: 700 24px/1 "Space Grotesk"; }
+  .verdict { font: 600 15px/1 Inter; padding: 8px 12px; border-radius: 999px; }
+  .ok { background: var(--accent-soft); color: var(--accent-dark); }
+  .warn { background: var(--amber-soft); color: #8A5D07; }
+  .track { position: relative; height: 16px; border-radius: 9px; background: var(--grey-soft); }
+  .track i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 9px; background: var(--accent); }
+  .track i.w { background: var(--amber); }
+  .track em { position: absolute; top: -6px; bottom: -6px; width: 3px; border-radius: 2px; background: var(--ink); }
+  .rule-f { display: flex; justify-content: space-between; margin-top: 10px; font-size: 16px; color: var(--muted); }
+
+  /* 4 — UK + bills calendar */
+  #c4 .left { width: 500px; }
+  #c4 h2 { margin: 22px 0 22px; }
+  #c4 .chips { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  #c4 .chip { padding: 13px 20px; border-radius: 12px; background: var(--card); border: 1px solid var(--line); font: 600 19px/1 Inter; }
+  #c4 .chip.f { background: var(--ink); color: #fff; border-color: var(--ink); }
+  #c4 .cal { width: 530px; padding: 30px 30px 18px; flex: none; }
+  .bill { display: grid; grid-template-columns: 1fr 86px 132px; align-items: center; padding: 15px 0; border-bottom: 1px solid var(--line); font-size: 18px; }
+  .bill:last-child { border-bottom: 0; }
+  .bill .d { color: var(--muted); font-size: 16px; }
+  .st { justify-self: end; font: 600 14px/1 Inter; padding: 8px 11px; border-radius: 999px; white-space: nowrap; }
+  .st.paid { background: var(--accent-soft); color: var(--accent-dark); }
+  .st.up { background: var(--grey-soft); color: var(--ink-2); }
+  .st.week { background: var(--amber-soft); color: #8A5D07; }
+  .st.over { background: var(--red-soft); color: #9A2F26; }
+
+  /* 5 — you get */
+  #c5 .head { position: absolute; left: 80px; top: 92px; width: 900px; }
+  #c5 h2 { margin: 22px 0 0; }
+  #c5 .files { position: absolute; left: 80px; right: 80px; top: 330px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  #c5 .file { padding: 30px 26px; min-height: 300px; display: flex; flex-direction: column; }
+  .ext { width: 92px; height: 78px; border-radius: 10px 22px 10px 10px; display: grid; place-items: end start; padding: 10px; font: 700 15px/1 "Space Grotesk"; color: #fff; margin-bottom: 26px; }
+  .file h3 { font: 700 25px/1.12 "Space Grotesk"; letter-spacing: -.02em; margin-bottom: 10px; }
+  .file p { font-size: 17px; line-height: 1.45; color: var(--ink-2); }
+  #c5 .strip { position: absolute; left: 80px; right: 80px; bottom: 136px; display: flex; gap: 14px; }
+</style>
+</head>
+<body>
+
+<!-- 1. HERO / MAIN COVER -->
+<section class="canvas" id="c1">
+  <div class="split">
+  <div class="left">
+    <div class="eyebrow">UK household budget planner</div>
+    <h1>The Pound Planner</h1>
+    <p class="lede">Enter your income and bills once. See exactly what's <strong>safe to spend every day</strong> until payday.</p>
+    <div class="pills">
+      <span class="pill"><span class="dot"></span>Excel + Google Sheets</span>
+      <span class="pill"><span class="dot"></span>Made for the UK</span>
+      <span class="pill"><span class="dot"></span>No subscription</span>
+    </div>
+  </div>
+  <div class="card dash">
+    <div class="dash-h"><b>Dashboard</b><span>November</span></div>
+    <div class="safe">
+      <div class="lbl">Safe to spend per day</div>
+      <div class="val num">£39.97</div>
+      <div class="sub">18 days until payday</div>
+    </div>
+    <div class="row"><span>Income</span><span class="num">£2,450.00</span></div>
+    <div class="row"><span>Spent so far</span><span class="num">£1,318.40</span></div>
+    <div class="row"><span>Bills still to pay</span><span class="num">£412.00</span></div>
+    <div class="row"><span>Left to spend</span><span class="num" style="color:var(--accent-dark)">£719.60</span></div>
+    <div class="bar"><i style="width:54%"></i></div>
+  </div>
+  </div>
+  <span class="example" style="right:84px; top:52px">Example data</span>
+  <div class="credential">
+    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#1F8F5F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+    Designed by a UK chartered management accountant
+  </div>
+</section>
+
+<!-- 2. WHAT'S INSIDE -->
+<section class="canvas" id="c2">
+  <div class="pad" style="inset:72px 80px auto">
+    <div class="eyebrow">What's inside</div>
+    <h2 style="margin-top:20px">Six tabs. One clear picture.</h2>
+  </div>
+  <div class="grid">
+    <div class="card tile"><div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#146B46" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg></div><h3>Dashboard</h3><p>Income, spent, left to spend, bills to come and your safe-to-spend per day.</p></div>
+    <div class="card tile"><div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#146B46" stroke-width="2" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div><h3>50/30/20 check</h3><p>Needs, wants and savings against the classic rule, with a verdict for each.</p></div>
+    <div class="card tile"><div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#146B46" stroke-width="2" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg></div><h3>Bills Calendar</h3><p>List direct debits once. See Paid, Upcoming, Due this week or Overdue.</p></div>
+    <div class="card tile"><div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#146B46" stroke-width="2" stroke-linecap="round"><path d="M4 6h10M4 12h16M4 18h7"/><circle cx="18" cy="6" r="2"/><circle cx="15" cy="18" r="2"/></svg></div><h3>Monthly Budget</h3><p>Budget vs actual for 30 editable categories, with progress bars and status.</p></div>
+    <div class="card tile"><div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#146B46" stroke-width="2" stroke-linecap="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/></svg></div><h3>Transactions log</h3><p>1,000 rows with a category dropdown. Everything else updates from here.</p></div>
+    <div class="card tile"><div class="ico"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#146B46" stroke-width="2" stroke-linecap="round"><path d="M3 17l5-5 4 4 8-8"/><path d="M15 8h5v5"/></svg></div><h3>Annual Overview</h3><p>Every category, month by month, for the whole year.</p></div>
+  </div>
+  <div class="footer"><div class="brand"><span class="mark">£</span>The Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 3. 50/30/20 -->
+<section class="canvas" id="c3">
+  <div class="split">
+  <div class="left">
+    <div class="eyebrow">50/30/20 check</div>
+    <h2>Is your budget balanced?</h2>
+    <p class="lede">See how your needs, wants and savings compare with the classic 50/30/20 rule, with a plain-English verdict for each.</p>
+  </div>
+  <div class="card panel">
+    <div class="rule">
+      <div class="rule-h"><b>Needs</b><span class="verdict warn">Slightly over</span></div>
+      <div class="track"><i class="w" style="width:52%"></i><em style="left:50%"></em></div>
+      <div class="rule-f"><span class="num">52% of income</span><span>Target 50%</span></div>
+    </div>
+    <div class="rule">
+      <div class="rule-h"><b>Wants</b><span class="verdict ok">On track</span></div>
+      <div class="track"><i style="width:28%"></i><em style="left:30%"></em></div>
+      <div class="rule-f"><span class="num">28% of income</span><span>Target 30%</span></div>
+    </div>
+    <div class="rule">
+      <div class="rule-h"><b>Savings</b><span class="verdict ok">On track</span></div>
+      <div class="track"><i style="width:20%"></i><em style="left:20%"></em></div>
+      <div class="rule-f"><span class="num">20% of income</span><span>Target 20%</span></div>
+    </div>
+  </div>
+  </div>
+  <span class="example" style="right:84px; top:52px">Example data</span>
+  <div class="footer"><div class="brand"><span class="mark">£</span>The Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 4. MADE FOR THE UK + BILLS -->
+<section class="canvas" id="c4">
+  <div class="split">
+  <div class="left">
+    <div class="eyebrow">Made for the UK</div>
+    <h2>Built for UK households.</h2>
+    <p class="lede">The UK costs that budget templates from abroad leave out are already in the category list.</p>
+    <div class="chips">
+      <span class="chip">Council tax</span><span class="chip">TV licence</span>
+      <span class="chip">Universal Credit</span><span class="chip">ISAs</span>
+      <span class="chip f">£ pounds</span><span class="chip f">DD/MM/YYYY</span><span class="chip f">Monthly pay</span>
+    </div>
+  </div>
+  <div class="card cal">
+    <div class="dash-h"><b>Bills Calendar</b><span>November</span></div>
+    <div class="bill"><span>Council tax</span><span class="d num">1 Nov</span><span class="st paid">Paid</span></div>
+    <div class="bill"><span>Rent</span><span class="d num">3 Nov</span><span class="st paid">Paid</span></div>
+    <div class="bill"><span>Mobile phone</span><span class="d num">9 Nov</span><span class="st over">Overdue</span></div>
+    <div class="bill"><span>Energy</span><span class="d num">14 Nov</span><span class="st week">Due this week</span></div>
+    <div class="bill"><span>TV licence</span><span class="d num">20 Nov</span><span class="st up">Upcoming</span></div>
+    <div class="bill"><span>Broadband</span><span class="d num">24 Nov</span><span class="st up">Upcoming</span></div>
+  </div>
+  </div>
+  <span class="example" style="right:84px; top:52px">Example data</span>
+  <div class="footer"><div class="brand"><span class="mark">£</span>The Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 5. WHAT YOU GET -->
+<section class="canvas" id="c5">
+  <div class="head">
+    <div class="eyebrow">What you get</div>
+    <h2>Set up in five minutes.</h2>
+  </div>
+  <div class="files">
+    <div class="card file"><div class="ext" style="background:#1D6F42">XLSX</div><h3>Excel file</h3><p>Works in Excel 2016 or later.</p></div>
+    <div class="card file"><div class="ext" style="background:#1F8F5F">SHEETS</div><h3>Google Sheets version</h3><p>A link to copy it into your own Drive.</p></div>
+    <div class="card file"><div class="ext" style="background:#10231C">PDF</div><h3>One-page guide</h3><p>How to set it up and use it each month.</p></div>
+    <div class="card file"><div class="ext" style="background:#5E6B64">DEMO</div><h3>Example data</h3><p>See how it works, then clear it and start.</p></div>
+  </div>
+  <div class="strip">
+    <span class="pill"><span class="dot"></span>Instant download</span>
+    <span class="pill"><span class="dot"></span>Input cells clearly marked</span>
+    <span class="pill"><span class="dot"></span>Formulas protected</span>
+  </div>
+  <div class="footer"><div class="brand"><span class="mark">£</span>The Pound Planner</div><span class="small">Personal-use licence</span></div>
+</section>
+
+</body>
+</html>
