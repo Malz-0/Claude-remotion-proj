@@ -1,7 +1,7 @@
 ---
 type: runbook
 tags: [docs, setup]
-updated: 2026-11-01
+updated: 2026-11-12
 ---
 # Environment Setup
 
@@ -19,6 +19,7 @@ Up: [[Home]] · Manual steps: [[Setup Actions]]
 | Obsidian desktop / `obsidian` CLI | ⛔ needs GUI app; not possible here |
 | Obsidian Headless `ob` 0.0.14 | ✅ installed · ❌ not logged in (needs Sync subscription) |
 | Your local vault | ❌ not reachable (no Remote Control folders shared) |
+| ECC plugin | ✅ on your computer (Claude Code, user scope) · ❌ not in cloud sessions |
 
 ## Reuse in a new project
 1. Copy `CLAUDE.md`, `AGENTS.md`, `scripts/`, and `vault/` (empty the project folder) into the repo.

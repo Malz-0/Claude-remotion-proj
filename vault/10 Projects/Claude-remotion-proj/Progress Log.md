@@ -15,3 +15,6 @@ Up: [[Claude-remotion-proj]]
 - Installed Codex CLI 0.166.0 and Obsidian Headless 0.0.14 in the sandbox; Codex reaches OpenAI
   through the proxy (verified with an intentionally invalid key → `invalid_api_key`). Auth pending.
 - Created this vault, templates, `codex-agent.sh`, `vault-check.mjs`, `bootstrap-dev-env.sh`.
+
+## 2026-11-12
+- ECC plugin (`ecc@ecc`) installed and working on the user's own machine (user scope, local Claude Code). Not present in cloud sessions. Precedence rule in `CLAUDE.md`: project rules win over ECC.
