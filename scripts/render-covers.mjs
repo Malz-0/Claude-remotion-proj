@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Renders each <section class="canvas" id="cN"> in an HTML file to a PNG at 2x scale
+// Renders each <section id="...">  in an HTML file to a PNG at 2x scale
 // (1200x900 CSS px -> 2400x1800 px, Etsy/Payhip-ready).
 // Usage: node scripts/render-covers.mjs marketing/pound-planner/covers.html out/pound-planner
 import { mkdirSync } from "node:fs";
@@ -17,7 +17,7 @@ const browser = await chromium.launch();
 const page = await browser.newPage({ viewport: { width: 1200, height: 900 }, deviceScaleFactor: 2 });
 await page.goto(pathToFileURL(resolve(src)).href);
 await page.evaluate(() => document.fonts.ready);
-const ids = await page.$$eval("section.canvas", (els) => els.map((e) => e.id));
+const ids = await page.$$eval("section[id]", (els) => els.map((e) => e.id));
 for (const [i, id] of ids.entries()) {
   const file = `${outDir}/${String(i + 1).padStart(2, "0")}-${id}.png`;
   await page.locator(`#${id}`).screenshot({ path: file });

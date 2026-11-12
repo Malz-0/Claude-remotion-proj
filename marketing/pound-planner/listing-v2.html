@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Pound Planner listing images v2</title>
+<style>
+  @font-face { font-family: "Inter"; src: url("../../public/fonts/Inter-Variable.woff2") format("woff2"); font-weight: 100 900; }
+  :root {
+    --bg: #F7F6F0; --ink: #0D251E; --ink-2: #33473F; --muted: #66756E; --line: #E2E3DA;
+    --green: #298047; --green-dark: #1F6537; --green-soft: #E3EFE7; --card: #FFFFFF; --amber: #E0A21B;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #777; font-family: Inter, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+  .page { width: 1200px; height: 900px; background: var(--bg); position: relative; overflow: hidden; margin-bottom: 20px; }
+  .head { position: absolute; left: 72px; top: 56px; right: 72px; }
+  .eyebrow { font: 700 15px/1 Inter; letter-spacing: .16em; text-transform: uppercase; color: var(--green); }
+  h1 { font: 800 50px/1.06 Inter; letter-spacing: -.025em; margin-top: 14px; }
+  .sub { font: 500 21px/1.42 Inter; color: var(--ink-2); margin-top: 12px; max-width: 980px; }
+  .tag { position: absolute; right: 72px; top: 58px; font: 700 12px/1 Inter; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+         padding: 8px 12px; border: 1.5px solid #CBD0C6; border-radius: 999px; background: #fff; }
+  .stage { position: absolute; left: 72px; right: 72px; top: 250px; bottom: 76px; display: flex; align-items: center; justify-content: center; gap: 28px; }
+  .shot { position: relative; display: inline-block; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 14px;
+          box-shadow: 0 1px 0 rgba(13,37,30,.04), 0 26px 60px -22px rgba(13,37,30,.35); }
+  .shot .wrap { position: relative; }
+  .shot img { display: block; max-width: 1020px; max-height: 540px; width: auto; height: auto; border-radius: 4px; }
+  .ov { position: absolute; pointer-events: none; }
+  .ring { border: 5px solid var(--green); border-radius: 999px; box-shadow: 0 0 0 6px rgba(41,128,71,.18); }
+  .hl { border: 4px solid var(--amber); border-radius: 8px; background: rgba(224,162,27,.10); box-shadow: 0 0 0 6px rgba(224,162,27,.16); }
+  .col { background: rgba(41,128,71,.14); border: 3px solid var(--green); border-radius: 6px; }
+  .callout { position: absolute; font: 700 17px/1.2 Inter; color: #fff; background: var(--green); padding: 9px 14px; border-radius: 10px; white-space: nowrap;
+             box-shadow: 0 10px 24px -10px rgba(13,37,30,.45); }
+  .callout.amber { background: #B27A06; }
+  .foot { position: absolute; left: 72px; right: 72px; bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+  .brand { display: flex; align-items: center; gap: 10px; font: 800 19px/1 Inter; letter-spacing: -.01em; }
+  .mark { width: 32px; height: 32px; border-radius: 9px; background: var(--green); color: #fff; display: grid; place-items: center; font: 800 19px/1 Inter; }
+  .small { font: 500 15px/1.3 Inter; color: var(--muted); }
+  .tick { display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--green); flex: none; }
+  .ticks-r { position: absolute; left: 100%; margin-left: 22px; display: flex; align-items: center; gap: 10px; transform: translateY(-50%); font: 700 17px/1 Inter; color: var(--green-dark); white-space: nowrap; }
+
+  /* 6 what you get */
+  .cards { position: absolute; left: 72px; right: 72px; top: 300px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .c { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 30px 24px 28px; min-height: 300px;
+       box-shadow: 0 24px 56px -24px rgba(13,37,30,.32); display: flex; flex-direction: column; }
+  .ic { width: 92px; height: 92px; border-radius: 22px; background: var(--green-soft); display: grid; place-items: center; margin-bottom: 26px; }
+  .c h3 { font: 800 25px/1.15 Inter; letter-spacing: -.02em; margin-bottom: 10px; }
+  .c p { font: 500 17px/1.45 Inter; color: var(--ink-2); }
+
+  /* 9 trust */
+  .trust { position: absolute; left: 72px; right: 72px; top: 236px; bottom: 96px; display: flex; gap: 64px; align-items: center; }
+  .doc { flex: none; width: 380px; background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 12px; rotate: -2.5deg;
+         box-shadow: 0 30px 60px -24px rgba(13,37,30,.40); }
+  .doc img { display: block; width: 100%; border-radius: 4px; }
+  .list { display: flex; flex-direction: column; gap: 30px; }
+  .li { display: flex; gap: 18px; align-items: flex-start; font: 700 28px/1.25 Inter; letter-spacing: -.015em; }
+  .li .tick { width: 44px; height: 44px; margin-top: -2px; }
+  .disclaimer { position: absolute; left: 72px; right: 72px; bottom: 34px; font: 500 15px/1.3 Inter; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- 2 DASHBOARD -->
+<section class="page" id="dashboard">
+  <div class="head"><div class="eyebrow">Dashboard</div><h1>Your month at a glance.</h1>
+    <p class="sub">Income, spent, left, bills still to come, and what's safe to spend per day.</p></div>
+  <span class="tag">Example data</span>
+  <div class="stage">
+    <div class="shot"><div class="wrap">
+      <img src="shots/dashboard.png" alt="">
+      <div class="ov ring" style="left:-1.2%; top:46.4%; width:38.6%; height:6.9%"></div>
+      <div class="callout" style="left:40%; top:45.9%">£38.51 a day until payday</div>
+    </div></div>
+  </div>
+  <div class="foot"><div class="brand"><span class="mark">£</span>Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 3 BILLS CALENDAR -->
+<section class="page" id="bills">
+  <div class="head"><div class="eyebrow">Bills Calendar</div><h1>See every bill before it goes out.</h1>
+    <p class="sub">List your direct debits once. It flags what's paid, upcoming, due this week or overdue.</p></div>
+  <span class="tag">Example data</span>
+  <div class="stage" style="top:300px">
+    <div class="shot"><div class="wrap">
+      <img src="shots/bills.png" alt="">
+      <div class="ov col" style="left:88.1%; top:25.6%; width:11.9%; height:74.4%"></div>
+      <div class="callout" style="right:0; top:-74px">Status updates itself ↓</div>
+    </div></div>
+  </div>
+  <div class="foot"><div class="brand"><span class="mark">£</span>Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 4 MONTHLY BUDGET -->
+<section class="page" id="budget">
+  <div class="head"><div class="eyebrow">Monthly Budget</div><h1>Budget vs actual for every category.</h1>
+    <p class="sub">30 categories, all editable. Progress bar and status for each.</p></div>
+  <span class="tag">Example data</span>
+  <div class="stage" style="justify-content:flex-start">
+    <div class="shot"><div class="wrap">
+      <img src="shots/budget.png" alt="">
+      <div class="ov hl" style="left:-0.8%; top:21.3%; width:101.6%; height:3.9%"></div>
+      <div class="callout amber" style="left:101.5%; margin-left:18px; top:20.4%">98% used — nearly there</div>
+    </div></div>
+  </div>
+  <div class="foot"><div class="brand"><span class="mark">£</span>Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 5 SETUP -->
+<section class="page" id="setup">
+  <div class="head"><div class="eyebrow">Setup</div><h1>Five minutes to set up, two minutes a day.</h1>
+    <p class="sub">Enter your pay and a budget per category, then log spending from a dropdown. Cream cells are yours; the rest is protected.</p></div>
+  <span class="tag">Example data</span>
+  <div class="stage" style="justify-content:flex-start; padding-left:40px">
+    <div class="shot"><div class="wrap">
+      <img src="shots/setup.png" alt="" style="max-width:740px;-webkit-mask-image:linear-gradient(to bottom,#000 72%,transparent 99%);mask-image:linear-gradient(to bottom,#000 72%,transparent 99%)">
+      <div class="ticks-r" style="top:27.6%"><span class="tick"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Universal Credit</div>
+      <div class="ticks-r" style="top:62.9%"><span class="tick"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Council tax</div>
+      <div class="ticks-r" style="top:91%"><span class="tick"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><span>TV licence<br><span style="font-weight:500;color:var(--muted);font-size:15px">further down the list</span></span></div>
+    </div></div>
+  </div>
+  <div class="foot"><div class="brand"><span class="mark">£</span>Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 6 WHAT YOU GET -->
+<section class="page" id="whatyouget">
+  <div class="head"><div class="eyebrow">What you get</div><h1>Everything in the download.</h1></div>
+  <div class="cards">
+    <div class="c"><div class="ic"><svg width="50" height="50" viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" rx="9" fill="#298047"/><g fill="#fff"><rect x="11" y="12" width="12" height="6"/><rect x="25" y="12" width="12" height="6"/><rect x="11" y="21" width="12" height="6"/><rect x="25" y="21" width="12" height="6"/><rect x="11" y="30" width="12" height="6"/><rect x="25" y="30" width="12" height="6"/></g></svg></div>
+      <h3>Excel file (.xlsx)</h3><p>Works in Excel 2016 or later.</p></div>
+    <div class="c"><div class="ic"><svg width="50" height="50" viewBox="0 0 48 48"><path d="M12 4h17l11 11v25a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#298047"/><path d="M29 4v11h11" fill="#1F6537"/><g stroke="#fff" stroke-width="2.4"><rect x="14" y="21" width="20" height="15" fill="none"/><path d="M14 28.5h20M24 21v15"/></g></svg></div>
+      <h3>Google Sheets version</h3><p>A link to copy it into your own Drive.</p></div>
+    <div class="c"><div class="ic"><svg width="50" height="50" viewBox="0 0 48 48"><path d="M12 4h17l11 11v25a4 4 0 0 1-4 4H12a4 4 0 0 1-4-4V8a4 4 0 0 1 4-4z" fill="#0D251E"/><path d="M29 4v11h11" fill="#33473F"/><text x="24" y="35" text-anchor="middle" font-family="Inter" font-weight="800" font-size="10" fill="#fff">PDF</text></svg></div>
+      <h3>One-page how-to guide (PDF)</h3><p>Setup, daily use and the new-month routine.</p></div>
+    <div class="c"><div class="ic"><svg width="50" height="50" viewBox="0 0 48 48"><rect x="4" y="4" width="40" height="40" rx="9" fill="#298047"/><path d="M12 33l8-9 6 5 10-12" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <h3>Example data included</h3><p>See how it works, then clear it and start.</p></div>
+  </div>
+  <div class="foot"><div class="brand"><span class="mark">£</span>Pound Planner</div><span class="small" style="font-weight:700; color:var(--ink-2)">Instant download. Works in Excel 2016+ and Google Sheets.</span></div>
+</section>
+
+<!-- 7 50/30/20 -->
+<section class="page" id="fiftythirtytwenty">
+  <div class="head"><div class="eyebrow">50/30/20 check</div><h1>The 50/30/20 rule, done for you.</h1>
+    <p class="sub">Needs, Wants and Savings against the targets, with a verdict for each. Targets are editable.</p></div>
+  <span class="tag">Example data</span>
+  <div class="stage">
+    <div class="shot"><div class="wrap"><img src="shots/five-thirty-twenty.png" alt=""></div></div>
+  </div>
+  <div class="foot"><div class="brand"><span class="mark">£</span>Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 8 ANNUAL OVERVIEW -->
+<section class="page" id="annual">
+  <div class="head"><div class="eyebrow">Annual Overview</div><h1>The whole year on one page.</h1>
+    <p class="sub">Every category by month, filled in from your transactions.</p></div>
+  <span class="tag">Example data</span>
+  <div class="stage">
+    <div class="shot"><div class="wrap">
+      <img src="shots/annual.png" alt="">
+      <div class="ov col" style="left:78.1%; top:3.6%; width:6.1%; height:96.4%"></div>
+    </div></div>
+  </div>
+  <div class="foot"><div class="brand"><span class="mark">£</span>Pound Planner</div><span class="small">Excel (.xlsx) + Google Sheets</span></div>
+</section>
+
+<!-- 9 TRUST -->
+<section class="page" id="trust">
+  <div class="head"><div class="eyebrow">Why Pound Planner</div><h1>Built properly. Kept private.</h1></div>
+  <div class="trust">
+    <div class="doc"><img src="shots/guide.png" alt="How-to guide"></div>
+    <div class="list">
+      <div class="li"><span class="tick"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Designed by a UK chartered management accountant</div>
+      <div class="li"><span class="tick"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>Every formula checked and protected</div>
+      <div class="li"><span class="tick"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span>No bank logins, no subscription, no data leaves your computer</div>
+    </div>
+  </div>
+  <p class="disclaimer">Educational budgeting tool, not financial advice.</p>
+</section>
+
+</body>
+</html>
