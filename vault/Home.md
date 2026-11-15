@@ -9,7 +9,7 @@ Entry point for the vault. Every note should be reachable from here in ≤ 2 cli
 
 ## Projects
 - [[Claude-remotion-proj]] — programmatic video with Remotion · status: active
-- [[Cyber Digital Products]] — AI-assisted cyber security digital products (UK) · status: validating
+- Pound Planner business — moved to the private repo `Malz-0/pound-planner` (15 Nov 2026)
 
 ## Docs & runbooks
 - [[Agent Workflow]] — how Claude Code, Codex, Obsidian and GitHub work together
